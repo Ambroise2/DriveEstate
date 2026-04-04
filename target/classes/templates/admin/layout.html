@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="adminLayout(title, content)">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta th:name="_csrf" th:content="${_csrf.token}"/>
+<title th:replace="${title}">Admin — DriveEstate</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--navy:#0A1628;--sidebar-w:240px;}
+body{font-family:'Outfit',sans-serif;background:#F1F3F7;margin:0;display:flex;min-height:100vh;}
+.sidebar{width:var(--sidebar-w);background:var(--navy);color:#fff;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column;}
+.sidebar .brand{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--gold);padding:1.25rem 1.25rem .5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:.5rem;}
+.sidebar .brand small{display:block;font-family:'Outfit',sans-serif;font-size:.65rem;color:rgba(255,255,255,.4);font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.sidebar-section{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:.75rem 1.25rem .3rem;}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 1.25rem;color:rgba(255,255,255,.65);font-size:.85rem;text-decoration:none;border-left:3px solid transparent;transition:all .2s;}
+.nav-item:hover,.nav-item.active{color:#fff;background:rgba(201,168,76,.12);border-left-color:var(--gold);}
+.nav-item i{width:16px;text-align:center;font-size:.88rem;}
+.badge-pill{background:var(--gold);color:var(--navy);font-size:.65rem;padding:.2rem .45rem;border-radius:10px;font-weight:700;margin-left:auto;}
+.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:.75rem;}
+.main-content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:#fff;border-bottom:1px solid #E5E7EB;padding:.75rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.topbar h6{margin:0;font-weight:700;font-size:1rem;}
+.page-body{padding:1.75rem;flex:1;}
+.stat-card{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #F0F0F0;}
+.stat-card .value{font-size:2rem;font-weight:700;font-family:'Cormorant Garamond',serif;}
+.stat-card .label{font-size:.78rem;color:#6B7280;}
+.card-box{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.btn-gold{background:var(--gold);color:var(--navy);border:none;font-weight:600;border-radius:8px;}
+.btn-gold:hover{background:#E8C97A;color:var(--navy);}
+.table th{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9CA3AF;border-top:none;}
+.table td{font-size:.84rem;vertical-align:middle;}
+.form-control:focus,.form-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">DriveEstate<small>Admin Control Panel</small></div>
+
+  <div class="sidebar-section">Overview</div>
+  <a th:href="@{/admin/dashboard}" class="nav-item"><i class="fa fa-chart-line"></i> Dashboard</a>
+
+  <div class="sidebar-section">Management</div>
+  <a th:href="@{/admin/users}"    class="nav-item"><i class="fa fa-users"></i> Users</a>
+  <a th:href="@{/admin/listings}" class="nav-item"><i class="fa fa-list"></i> All Listings</a>
+  <a th:href="@{/admin/listings(status=PENDING)}" class="nav-item">
+    <i class="fa fa-clock"></i> Pending Review <span class="badge-pill">!</span>
+  </a>
+  <a th:href="@{/admin/inquiries}" class="nav-item"><i class="fa fa-envelope"></i> Inquiries</a>
+
+  <div class="sidebar-section">Analytics</div>
+  <a th:href="@{/admin/reports}" class="nav-item"><i class="fa fa-chart-bar"></i> Reports</a>
+  <a th:href="@{/admin/logs}"    class="nav-item"><i class="fa fa-history"></i> Activity Logs</a>
+
+  <div class="sidebar-section">System</div>
+  <a th:href="@{/admin/settings}"  class="nav-item"><i class="fa fa-cog"></i> Settings &amp; Broadcast</a>
+  <a th:href="@{/h2-console}" target="_blank" class="nav-item"><i class="fa fa-database"></i> Database Console</a>
+
+  <div class="sidebar-bottom">
+    <a th:href="@{/}"           class="nav-item" style="font-size:.8rem;"><i class="fa fa-arrow-left"></i> Back to Site</a>
+    <a th:href="@{/auth/logout}" class="nav-item" style="font-size:.8rem;color:rgba(255,100,100,.8);"><i class="fa fa-sign-out-alt"></i> Logout</a>
+  </div>
+</aside>
+
+<div class="main-content">
+  <div class="topbar">
+    <h6 th:replace="${title}">Admin</h6>
+    <div class="d-flex align-items-center gap-3">
+      <span style="font-size:.8rem;color:#6B7280;">Logged in as <strong>Admin</strong></span>
+      <a th:href="@{/}" class="btn btn-gold btn-sm">View Site</a>
+    </div>
+  </div>
+
+  <div th:if="${success != null}" class="px-4 pt-3">
+    <div class="alert alert-success alert-dismissible fade show py-2" th:text="${success}">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  </div>
+  <div th:if="${error != null}" class="px-4 pt-3">
+    <div class="alert alert-danger alert-dismissible fade show py-2" th:text="${error}">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  </div>
+
+  <div class="page-body" th:replace="${content}">Loading...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

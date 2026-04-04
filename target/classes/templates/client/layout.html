@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout(title,content)">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title th:replace="${title}">DriveEstate</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gold-l:#E8C97A;--navy:#0A1628;--navy-m:#132040;--navy-l:#1E3160;}
+*{box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:#F8F9FB;color:#1A1A2E;}
+h1,h2,h3,.brand{font-family:'Cormorant Garamond',serif;}
+.navbar-main{background:var(--navy);border-bottom:2px solid rgba(201,168,76,.25);padding:.65rem 0;}
+.brand{font-size:1.65rem;font-weight:700;color:var(--gold)!important;letter-spacing:-.5px;}
+.brand span{color:#fff;}
+.nav-link{color:rgba(255,255,255,.8)!important;font-size:.875rem;font-weight:500;padding:.4rem .85rem!important;border-radius:6px;transition:all .2s;}
+.nav-link:hover,.nav-link.active{color:var(--gold)!important;background:rgba(201,168,76,.1);}
+.btn-gold{background:var(--gold);color:var(--navy);font-weight:600;border:none;border-radius:8px;padding:.45rem 1.2rem;transition:all .2s;}
+.btn-gold:hover{background:var(--gold-l);color:var(--navy);transform:translateY(-1px);}
+.btn-outline-gold{border:1.5px solid var(--gold);color:var(--gold);background:transparent;border-radius:8px;padding:.45rem 1.2rem;font-weight:500;transition:all .2s;}
+.btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
+.card-listing{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:all .25s;border:1px solid #eee;}
+.card-listing:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.12);}
+.card-img{height:195px;background:linear-gradient(135deg,var(--navy),var(--navy-l));display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;}
+.price{font-size:1.2rem;font-weight:700;color:var(--gold);}
+.meta{font-size:.78rem;color:#6B7280;}
+.badge-v{background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;font-size:.68rem;}
+.badge-f{background:#FFFBEB;color:#92400E;border:1px solid #FCD34D;font-size:.68rem;}
+.page-hdr{background:linear-gradient(135deg,var(--navy),var(--navy-l));color:#fff;padding:2.25rem 0;margin-bottom:1.75rem;border-bottom:3px solid var(--gold);}
+.site-footer{background:var(--navy);color:rgba(255,255,255,.65);padding:3rem 0 1.5rem;margin-top:4rem;}
+.site-footer h6{color:var(--gold);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.85rem;}
+.site-footer a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.85rem;display:block;margin-bottom:.4rem;transition:color .2s;}
+.site-footer a:hover{color:var(--gold);}
+.filter-bar{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:72px;}
+.filter-bar h6{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#9CA3AF;margin-bottom:.6rem;padding-top:.6rem;border-top:1px solid #f0f0f0;}
+.filter-bar h6:first-child{border-top:none;padding-top:0;}
+.form-control:focus,.form-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.loan-calc{background:linear-gradient(135deg,var(--navy),var(--navy-l));color:#fff;border-radius:14px;padding:1.5rem;}
+.loan-result{font-size:1.5rem;font-weight:700;color:var(--gold);}
+.search-wrap{position:relative;}
+.search-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:2000;display:none;max-height:320px;overflow-y:auto;}
+.search-item{padding:.65rem 1rem;cursor:pointer;border-bottom:1px solid #f3f4f6;font-size:.85rem;transition:background .15s;}
+.search-item:hover{background:#f9fafb;}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div style="background:#081020;color:rgba(255,255,255,.55);font-size:.75rem;padding:.35rem 0;">
+  <div class="container-fluid px-4 d-flex justify-content-between">
+    <span><i class="fa fa-phone me-1" style="color:var(--gold)"></i><span th:text="${settings != null ? settings.getOrDefault('contact_phone', '+254 700 000 000') : '+254 700 000 000'}">+254 700 000 000</span>&nbsp;|&nbsp;<i class="fa fa-envelope me-1" style="color:var(--gold)"></i><span th:text="${settings != null ? settings.getOrDefault('contact_email', 'support@driveestate.co.ke') : 'support@driveestate.co.ke'}">support@driveestate.co.ke</span></span>
+    <span>
+      <span sec:authorize="isAuthenticated()">
+        Hi, <span sec:authentication="name"></span> &nbsp;|&nbsp;
+        <span sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}" style="color:var(--gold)">Admin Panel</a> &nbsp;|&nbsp;</span>
+        <a th:href="@{/auth/logout}" style="color:rgba(255,255,255,.55)">Logout</a>
+      </span>
+      <span sec:authorize="!isAuthenticated()">
+        <a th:href="@{/auth/login}" style="color:rgba(255,255,255,.55)">Login</a> &nbsp;|&nbsp;
+        <a th:href="@{/auth/register}" style="color:var(--gold)">Create Account</a>
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- Main Nav -->
+<nav class="navbar-main sticky-top">
+  <div class="container-fluid px-4 d-flex align-items-center gap-3 flex-wrap">
+    <a class="brand" th:href="@{/}">Drive<span>Estate</span></a>
+    <div class="search-wrap flex-grow-1" style="max-width:360px;">
+      <input id="globalSearch" type="text" class="form-control form-control-sm" placeholder="Search cars, land, location…" autocomplete="off"
+             style="background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;">
+      <div class="search-drop" id="searchDrop"></div>
+    </div>
+    <div class="d-flex align-items-center gap-1 ms-auto flex-wrap">
+      <a class="nav-link" th:href="@{/}">Home</a>
+      <a class="nav-link" th:href="@{/listings}">Browse</a>
+      <a class="nav-link" th:href="@{/listings(type=car)}">Cars</a>
+      <a class="nav-link" th:href="@{/listings(type=land)}">Land</a>
+      <span sec:authorize="isAuthenticated()">
+        <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+        <a class="nav-link" th:href="@{/favorites}"><i class="fa fa-heart"></i></a>
+        <a class="nav-link" th:href="@{/messages}"><i class="fa fa-envelope"></i></a>
+      </span>
+      <a class="btn btn-gold btn-sm ms-2" th:href="@{/post-listing}"><i class="fa fa-plus me-1"></i>Post Listing</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash Messages -->
+<div class="container-fluid px-4 mt-2">
+  <div th:if="${success}" class="alert alert-success alert-dismissible fade show py-2">
+    <span th:text="${success}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <div th:if="${error}" class="alert alert-danger alert-dismissible fade show py-2">
+    <span th:text="${error}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+</div>
+
+<!-- Page Content -->
+<div th:replace="${content}">Page content goes here</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container-fluid px-4">
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:.5rem;">DriveEstate</div>
+        <p style="font-size:.85rem;">Kenya's most trusted marketplace for premium cars and land.</p>
+        <div class="d-flex gap-3 mt-2">
+          <a href="#" style="color:var(--gold);font-size:1.1rem;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color:var(--gold);font-size:1.1rem;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:var(--gold);font-size:1.1rem;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="color:var(--gold);font-size:1.1rem;"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <h6>Marketplace</h6>
+        <a th:href="@{/listings(type=car)}">Browse Cars</a>
+        <a th:href="@{/listings(type=land)}">Browse Land</a>
+        <a th:href="@{/post-listing}">Post a Listing</a>
+      </div>
+      <div class="col-lg-2">
+        <h6>Account</h6>
+        <a th:href="@{/dashboard}">My Dashboard</a>
+        <a th:href="@{/my-listings}">My Listings</a>
+        <a th:href="@{/favorites}">Saved Listings</a>
+        <a th:href="@{/messages}">Messages</a>
+      </div>
+      <div class="col-lg-2">
+        <h6>Company</h6>
+        <a href="#">About DriveEstate</a>
+        <a href="#">How It Works</a>
+        <a href="#">Safety Tips</a>
+      </div>
+      <div class="col-lg-3">
+        <h6>Contact</h6>
+        <p style="font-size:.85rem;"><i class="fa fa-map-marker-alt me-2" style="color:var(--gold)"></i>Westlands, Nairobi</p>
+        <p style="font-size:.85rem;"><i class="fa fa-phone me-2" style="color:var(--gold)"></i>+254 700 000 000</p>
+        <p style="font-size:.85rem;"><i class="fa fa-envelope me-2" style="color:var(--gold)"></i>support@driveestate.co.ke</p>
+      </div>
+    </div>
+    <hr style="border-color:rgba(255,255,255,.1);margin:1.75rem 0 1rem;">
+    <div class="d-flex justify-content-between flex-wrap gap-2" style="font-size:.78rem;">
+      <span>© 2024 DriveEstate Kenya. All rights reserved.</span>
+      <span><a href="#" style="color:rgba(255,255,255,.4);">Privacy</a> · <a href="#" style="color:rgba(255,255,255,.4);">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const gs=document.getElementById('globalSearch'),sd=document.getElementById('searchDrop');
+let t;
+if(gs){
+  gs.addEventListener('input',function(){
+    clearTimeout(t);const q=this.value.trim();
+    if(q.length<2){sd.style.display='none';return;}
+    t=setTimeout(async()=>{
+      const r=await fetch('/api/search?q='+encodeURIComponent(q));
+      const d=await r.json();
+      if(!d.length){sd.style.display='none';return;}
+      sd.innerHTML=d.map(i=>`<a href="${i.url}" class="search-item d-block text-decoration-none text-dark"><div style="font-weight:600;">${i.title}</div><div style="font-size:.72rem;color:#888;">${i.type==='car'?'🚗':'🌍'} ${i.location} · <b style="color:#C9A84C;">${i.price}</b></div></a>`).join('');
+      sd.style.display='block';
+    },280);
+  });
+  document.addEventListener('click',e=>{if(!gs.contains(e.target))sd.style.display='none';});
+}
+setTimeout(()=>document.querySelectorAll('.alert').forEach(a=>{try{bootstrap.Alert.getOrCreateInstance(a).close();}catch(e){}}),5000);
+</script>
+</body>
+</html>

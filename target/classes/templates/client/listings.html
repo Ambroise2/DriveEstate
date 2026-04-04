@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{client/layout :: layout(~{::title}, ~{::main})}">
+<head><title>Browse Listings — DriveEstate</title></head>
+<body><main>
+<div class="page-hdr"><div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+  <div><h1 style="font-size:1.85rem;margin-bottom:.1rem;">Browse Listings</h1>
+  <p class="mb-0" style="color:rgba(255,255,255,.7);" th:text="${totalItems + ' listings found'}"></p></div>
+  <div class="d-flex gap-2">
+    <a th:href="@{/listings(view='grid')}" th:classappend="${view == 'grid'} ? 'btn-gold' : 'btn-outline-gold'" class="btn btn-sm"><i class="fa fa-th"></i></a>
+    <a th:href="@{/listings(view='list')}" th:classappend="${view == 'list'} ? 'btn-gold' : 'btn-outline-gold'" class="btn btn-sm"><i class="fa fa-list"></i></a>
+  </div>
+</div></div>
+
+<div class="container-fluid px-4 pb-5">
+  <div class="row g-4">
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <form method="GET" th:action="@{/listings}" id="fForm">
+        <div class="filter-bar">
+          <div class="d-flex justify-content-between mb-3">
+            <strong>Filters</strong><a th:href="@{/listings}" class="btn btn-sm btn-outline-secondary" style="font-size:.73rem;">Clear</a>
+          </div>
+          <h6>Type</h6>
+          <div class="d-flex gap-1 mb-2">
+            <a th:href="@{/listings}" th:classappend="${type == null} ? 'btn-gold' : 'btn-outline-secondary'" class="btn btn-sm flex-fill">All</a>
+            <a th:href="@{/listings(type=car)}" th:classappend="${type == 'car'} ? 'btn-gold' : 'btn-outline-secondary'" class="btn btn-sm flex-fill">🚗</a>
+            <a th:href="@{/listings(type=land)}" th:classappend="${type == 'land'} ? 'btn-gold' : 'btn-outline-secondary'" class="btn btn-sm flex-fill">🌍</a>
+          </div>
+          <input type="hidden" name="type" th:value="${type}">
+          <h6>Search</h6>
+          <input type="text" name="q" class="form-control form-control-sm mb-2" placeholder="Keyword, make, model…" th:value="${q}">
+          <h6>County</h6>
+          <select name="county" class="form-select form-select-sm mb-2">
+            <option value="">All Counties</option>
+            <option th:each="c : ${counties}" th:value="${c}" th:text="${c}" th:selected="${c == county}"></option>
+          </select>
+          <h6>Price (KES)</h6>
+          <div class="row g-1 mb-2">
+            <div class="col-6"><input type="number" name="minPrice" class="form-control form-control-sm" placeholder="Min"></div>
+            <div class="col-6"><input type="number" name="maxPrice" class="form-control form-control-sm" placeholder="Max"></div>
+          </div>
+          <h6>Car — Fuel</h6>
+          <select name="fuel" class="form-select form-select-sm mb-2">
+            <option value="">Any</option>
+            <option th:each="f : ${ {'Petrol','Diesel','Electric','Hybrid'} }" th:value="${f}" th:text="${f}"></option>
+          </select>
+          <h6>Car — Transmission</h6>
+          <select name="transmission" class="form-select form-select-sm mb-2">
+            <option value="">Any</option>
+            <option th:each="t : ${ {'Automatic','Manual','CVT'} }" th:value="${t}" th:text="${t}"></option>
+          </select>
+          <h6>Land — Zoning</h6>
+          <select name="zoning" class="form-select form-select-sm mb-3">
+            <option value="">Any</option>
+            <option th:each="z : ${ {'Residential','Commercial','Agricultural','Industrial','Mixed Use'} }" th:value="${z}" th:text="${z}"></option>
+          </select>
+          <button type="submit" class="btn btn-gold w-100 btn-sm"><i class="fa fa-search me-1"></i>Apply Filters</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Grid -->
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <span style="font-size:.85rem;color:#6B7280;" th:text="${totalItems + ' results'}"></span>
+        <div class="d-flex gap-2 align-items-center">
+          <label style="font-size:.82rem;color:#6B7280;">Sort:</label>
+          <select class="form-select form-select-sm" style="width:auto;" onchange="window.location.href='/listings?sort='+this.value">
+            <option th:each="s : ${ {{'newest','Newest'},{'oldest','Oldest'},{'price_asc','Price ↑'},{'price_desc','Price ↓'},{'views','Most Viewed'}} }"
+                    th:value="${s[0]}" th:text="${s[1]}" th:selected="${sort == s[0]}"></option>
+          </select>
+        </div>
+      </div>
+
+      <div th:if="${listings.isEmpty()}" class="text-center py-5">
+        <div style="font-size:4rem;">🔍</div>
+        <h5 class="mt-2">No listings found</h5>
+        <a th:href="@{/listings}" class="btn btn-gold mt-2">Clear Filters</a>
+      </div>
+
+      <div th:unless="${listings.isEmpty()}" class="row g-3">
+        <div th:each="l : ${listings}" th:classappend="${view == 'list'} ? 'col-12' : 'col-sm-6 col-xl-4'">
+          <div class="card-listing" th:classappend="${view == 'list'} ? 'd-flex' : ''">
+            <div class="card-img" th:style="${view == 'list'} ? 'width:180px;height:auto;flex-shrink:0;' : ''"
+                 th:classappend="${l.listingType.name() == 'LAND'} ? 'land-img' : ''">
+              <span th:text="${l.listingType.name() == 'CAR' ? '🚗' : '🌍'}"></span>
+              <span th:if="${l.featured}" class="position-absolute badge badge-f px-2 py-1" style="top:8px;left:8px;border-radius:20px;font-size:.65rem;">⭐ Featured</span>
+            </div>
+            <div style="padding:1rem;" th:style="${view == 'list'} ? 'flex:1;display:flex;flex-direction:column;justify-content:space-between;' : ''">
+              <div>
+                <div style="font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" th:text="${l.title}"></div>
+                <div class="price" th:text="${l.formattedPrice}"></div>
+                <div class="meta mt-1" th:if="${l.listingType.name() == 'CAR'}">
+                  <span th:text="${l.year}"></span>
+                  <span th:if="${l.mileage != null}"> · <span th:text="${#numbers.formatInteger(l.mileage,1,'COMMA')}"></span> km</span>
+                  <span th:if="${l.fuelType != null}"> · <span th:text="${l.fuelType}"></span></span>
+                </div>
+                <div class="meta mt-1" th:if="${l.listingType.name() == 'LAND'}">
+                  <span th:if="${l.sizeAcres != null}" th:text="${l.sizeAcres + ' Acres'}"></span>
+                  <span th:if="${l.zoning != null}"> · <span th:text="${l.zoning}"></span></span>
+                </div>
+                <div class="meta mt-1"><i class="fa fa-map-marker-alt me-1" style="color:#C9A84C;"></i><span th:text="${l.location}"></span></div>
+              </div>
+              <div class="d-flex gap-2 mt-2">
+                <a th:href="@{/listing/{id}(id=${l.id})}" class="btn btn-gold btn-sm flex-fill">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav th:if="${totalPages > 1}" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+            <a class="page-link" th:href="@{/listings(page=${currentPage - 1})}">‹</a>
+          </li>
+          <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+              class="page-item" th:classappend="${i == currentPage} ? 'active'">
+            <a class="page-link" th:href="@{/listings(page=${i})}" th:text="${i + 1}"></a>
+          </li>
+          <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/listings(page=${currentPage + 1})}">›</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+</main></body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout :: adminLayout(~{::title}, ~{::section})}">
+<head><title>Settings — Admin</title></head>
+<body><section>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h5 style="font-weight:700;margin:0;">Site Settings</h5>
+    <p style="color:#6B7280;font-size:.85rem;margin:.2rem 0 0;">Control every aspect of your DriveEstate platform</p>
+  </div>
+</div>
+
+<!-- Settings Form with Tabs -->
+<div class="row g-0">
+  <div class="col-12">
+    <!-- Tab Nav -->
+    <ul class="nav nav-pills mb-4 gap-2 flex-wrap" id="settingsTabs">
+      <li class="nav-item"><button class="nav-link active px-4" data-bs-toggle="pill" data-bs-target="#tab-general">⚙️ General</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-contact">📞 Contact</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-social">🌐 Social Media</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-seo">🔍 SEO</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-features">🎛️ Features</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-finance">💳 Finance</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-broadcast">📢 Broadcast</button></li>
+      <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-system">🖥️ System</button></li>
+    </ul>
+
+    <form method="POST" th:action="@{/admin/settings}" id="settingsForm">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+      <div class="tab-content">
+
+        <!-- ── General ──────────────────────────────────────────────── -->
+        <div class="tab-pane fade show active" id="tab-general">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid #F3F4F6;">General Settings</h6>
+            <div class="row g-3">
+              <div class="col-md-6" th:each="s : ${generalSettings}">
+                <label th:text="${s.label}" style="font-size:.82rem;font-weight:600;color:#374151;"></label>
+                <textarea th:if="${s.inputType == 'textarea'}" th:name="${s.key}"
+                          class="form-control form-control-sm mt-1" rows="3"
+                          th:text="${s.value}"></textarea>
+                <input th:unless="${s.inputType == 'textarea'}"
+                       th:type="${s.inputType}" th:name="${s.key}"
+                       class="form-control form-control-sm mt-1" th:value="${s.value}">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save General Settings</button>
+          </div>
+        </div>
+
+        <!-- ── Contact ──────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-contact">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">Contact Information</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.25rem;">These appear in the topbar, footer, and listing contact buttons across the whole site.</p>
+            <div class="row g-3">
+              <div class="col-md-6" th:each="s : ${contactSettings}">
+                <label th:text="${s.label}" style="font-size:.82rem;font-weight:600;color:#374151;"></label>
+                <div class="input-group mt-1">
+                  <span class="input-group-text" style="font-size:.85rem;">
+                    <span th:if="${s.inputType == 'tel'}">📱</span>
+                    <span th:if="${s.inputType == 'email'}">✉️</span>
+                    <span th:unless="${s.inputType == 'tel' or s.inputType == 'email'}">📍</span>
+                  </span>
+                  <input th:type="${s.inputType}" th:name="${s.key}"
+                         class="form-control form-control-sm" th:value="${s.value}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save Contact Settings</button>
+          </div>
+        </div>
+
+        <!-- ── Social Media ──────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-social">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">Social Media Links</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.25rem;">These appear in the site footer. Leave blank to hide the icon.</p>
+            <div class="row g-3">
+              <div class="col-md-6" th:each="s : ${socialSettings}">
+                <label th:text="${s.label}" style="font-size:.82rem;font-weight:600;color:#374151;"></label>
+                <input type="url" th:name="${s.key}" class="form-control form-control-sm mt-1"
+                       th:value="${s.value}" placeholder="https://...">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save Social Links</button>
+          </div>
+        </div>
+
+        <!-- ── SEO ──────────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-seo">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">SEO &amp; Meta Settings</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.25rem;">Control how your site appears in Google search results.</p>
+            <div class="row g-3">
+              <div th:each="s : ${seoSettings}" th:classappend="${s.inputType == 'textarea'} ? 'col-12' : 'col-md-6'">
+                <label th:text="${s.label}" style="font-size:.82rem;font-weight:600;color:#374151;"></label>
+                <textarea th:if="${s.inputType == 'textarea'}" th:name="${s.key}"
+                          class="form-control form-control-sm mt-1" rows="2"
+                          th:text="${s.value}"></textarea>
+                <input th:unless="${s.inputType == 'textarea'}"
+                       th:type="${s.inputType}" th:name="${s.key}"
+                       class="form-control form-control-sm mt-1" th:value="${s.value}">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save SEO Settings</button>
+          </div>
+        </div>
+
+        <!-- ── Features / Toggles ────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-features">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">Feature Controls</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.5rem;">Toggle platform features on or off instantly — no restart required.</p>
+            <div class="row g-3">
+              <div class="col-12" th:each="s : ${featureSettings}">
+                <div style="background:#F8F9FB;border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-weight:600;font-size:.9rem;" th:text="${s.label}"></div>
+                    <div style="font-size:.78rem;color:#9CA3AF;">Key: <code th:text="${s.key}"></code></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                    <span th:text="${s.value == 'true' ? 'ON' : 'OFF'}"
+                          style="font-size:.75rem;font-weight:700;padding:.25rem .65rem;border-radius:20px;"
+                          th:style="${s.value == 'true'} ? 'background:#ECFDF5;color:#065F46;' : 'background:#FEF2F2;color:#991B1B;'"></span>
+                    <div class="form-check form-switch mb-0">
+                      <input class="form-check-input" type="checkbox" role="switch"
+                             th:name="${s.key}" value="true"
+                             th:checked="${s.value == 'true'}"
+                             style="width:2.5rem;height:1.3rem;"
+                             onchange="this.closest('.d-flex').querySelector('span').textContent = this.checked ? 'ON' : 'OFF'; this.closest('.d-flex').querySelector('span').style.background = this.checked ? '#ECFDF5' : '#FEF2F2'; this.closest('.d-flex').querySelector('span').style.color = this.checked ? '#065F46' : '#991B1B';">
+                    </div>
+                  </div>
+                </div>
+                <!-- Hidden input to ensure false is submitted when unchecked -->
+                <input type="hidden" th:name="${s.key} + '_hidden'" value="false">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save Feature Settings</button>
+          </div>
+        </div>
+
+        <!-- ── Finance ───────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-finance">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">Finance / Loan Calculator Defaults</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.25rem;">These are the default values pre-filled in the loan calculator shown on every car listing.</p>
+            <div class="row g-3">
+              <div class="col-md-4" th:each="s : ${financeSettings}">
+                <label th:text="${s.label}" style="font-size:.82rem;font-weight:600;color:#374151;"></label>
+                <input type="number" th:name="${s.key}" class="form-control form-control-sm mt-1" th:value="${s.value}">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-gold px-5"><i class="fa fa-save me-2"></i>Save Finance Settings</button>
+          </div>
+        </div>
+
+        <!-- ── Broadcast ─────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-broadcast">
+          <!-- This is a separate form, not part of settings form -->
+        </div>
+
+        <!-- ── System ────────────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="tab-system">
+          <!-- Not part of main form -->
+        </div>
+
+      </div><!-- /tab-content -->
+    </form>
+
+    <!-- Broadcast (separate form) -->
+    <div id="tab-broadcast-content" style="display:none;">
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:.5rem;">📢 Broadcast Notification</h6>
+            <p style="font-size:.83rem;color:#6B7280;margin-bottom:1.25rem;">Send a notification to all registered users. Appears in their notification bell instantly.</p>
+            <form method="POST" th:action="@{/admin/broadcast}">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+              <div class="mb-3">
+                <label style="font-size:.82rem;font-weight:600;">Notification Title *</label>
+                <input type="text" name="title" class="form-control mt-1" placeholder="e.g. New Feature Available" required>
+              </div>
+              <div class="mb-3">
+                <label style="font-size:.82rem;font-weight:600;">Message *</label>
+                <textarea name="message" class="form-control" rows="4" placeholder="Write your message..." required></textarea>
+              </div>
+              <div class="mb-4">
+                <label style="font-size:.82rem;font-weight:600;">Notification Type</label>
+                <div class="d-flex gap-3 mt-2 flex-wrap">
+                  <label style="cursor:pointer;"><input type="radio" name="type" value="info" checked> &nbsp;ℹ️ Info</label>
+                  <label style="cursor:pointer;"><input type="radio" name="type" value="success"> &nbsp;✅ Success</label>
+                  <label style="cursor:pointer;"><input type="radio" name="type" value="warning"> &nbsp;⚠️ Warning</label>
+                  <label style="cursor:pointer;"><input type="radio" name="type" value="danger"> &nbsp;🚨 Urgent</label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-gold w-100 py-2">
+                <i class="fa fa-broadcast-tower me-2"></i>Send Broadcast to All Users
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card-box" style="background:#F8F9FB;">
+            <h6 style="font-weight:700;margin-bottom:.75rem;">💡 Broadcast Tips</h6>
+            <ul style="font-size:.83rem;color:#6B7280;line-height:2;padding-left:1.25rem;margin:0;">
+              <li>Notifications appear in the 🔔 bell icon for all users</li>
+              <li>Use <strong>Info</strong> for general announcements</li>
+              <li>Use <strong>Success</strong> for good news (new features)</li>
+              <li>Use <strong>Warning</strong> for important notices</li>
+              <li>Use <strong>Urgent</strong> for critical alerts (maintenance)</li>
+              <li>Users can mark notifications as read</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Info (separate div) -->
+    <div id="tab-system-content" style="display:none;">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:1rem;">Platform Information</h6>
+            <div style="font-size:.88rem;">
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Version</span><strong>v1.0.0</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Stack</span><strong>Java 21+ · Spring Boot 3.2</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Database</span><strong>H2 Embedded (File-based)</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Security</span><strong>Spring Security 6 · BCrypt</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Templates</span><strong>Thymeleaf 3.1</strong></div>
+              <div class="d-flex justify-content-between py-2"><span style="color:#6B7280;">Build</span><strong>Maven 3.8+</strong></div>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a th:href="@{/h2-console}" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa fa-database me-1"></i>DB Console</a>
+              <a th:href="@{/admin/logs}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-history me-1"></i>Activity Logs</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card-box">
+            <h6 style="font-weight:700;margin-bottom:1rem;">Quick Stats</h6>
+            <div style="font-size:.88rem;">
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Total Users</span><strong th:text="${settings['site_name'] != null ? @userService.countClients() : '—'}">—</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Active Listings</span><strong>—</strong></div>
+              <div class="d-flex justify-content-between py-2 border-bottom"><span style="color:#6B7280;">Settings Configured</span><strong th:text="${allSettings.size()}">0</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Wire up the broadcast and system tabs (they use separate content divs)
+document.querySelectorAll('[data-bs-target="#tab-broadcast"]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('tab-broadcast-content').style.display = '';
+    document.getElementById('tab-system-content').style.display = 'none';
+    document.querySelector('.tab-content').style.display = 'none';
+  });
+});
+document.querySelectorAll('[data-bs-target="#tab-system"]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('tab-system-content').style.display = '';
+    document.getElementById('tab-broadcast-content').style.display = 'none';
+    document.querySelector('.tab-content').style.display = 'none';
+  });
+});
+// Hide separate divs when switching to other tabs
+document.querySelectorAll('[data-bs-toggle="pill"]:not([data-bs-target="#tab-broadcast"]):not([data-bs-target="#tab-system"])').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('tab-broadcast-content').style.display = 'none';
+    document.getElementById('tab-system-content').style.display = 'none';
+    document.querySelector('.tab-content').style.display = '';
+  });
+});
+
+// Feature toggle — handle unchecked checkboxes (they don't submit in HTML forms)
+document.getElementById('settingsForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  // For each toggle, ensure correct value is set
+  form.querySelectorAll('input[type="checkbox"][role="switch"]').forEach(cb => {
+    const hidden = form.querySelector('input[name="' + cb.name + '_hidden"]');
+    if (hidden) {
+      const hiddenReal = document.createElement('input');
+      hiddenReal.type = 'hidden';
+      hiddenReal.name = cb.name;
+      hiddenReal.value = cb.checked ? 'true' : 'false';
+      form.appendChild(hiddenReal);
+      cb.disabled = true; // prevent double-submit
+    }
+  });
+  form.submit();
+});
+</script>
+</section></body>
+</html>
