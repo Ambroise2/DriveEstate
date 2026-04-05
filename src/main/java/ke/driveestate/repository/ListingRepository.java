@@ -51,19 +51,14 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     @Query("SELECT l FROM Listing l WHERE l.title LIKE CONCAT('%', :q, '%') AND l.status = 'ACTIVE' ORDER BY l.views DESC")
     List<Listing> quickSearch(@Param("q") String q, Pageable pageable);
 
-    // Admin search
-    @Query(value = "SELECT * FROM listings l WHERE " +
-           "(:status IS NULL OR l.status = CAST(:status AS VARCHAR)) AND " +
-           "(:type IS NULL OR l.listing_type = CAST(:type AS VARCHAR)) AND " +
-           "(:q IS NULL OR l.title ILIKE CONCAT('%', :q, '%'))",
-           countQuery = "SELECT COUNT(*) FROM listings l WHERE " +
-           "(:status IS NULL OR l.status = CAST(:status AS VARCHAR)) AND " +
-           "(:type IS NULL OR l.listing_type = CAST(:type AS VARCHAR)) AND " +
-           "(:q IS NULL OR l.title ILIKE CONCAT('%', :q, '%'))",
-           nativeQuery = true)
+    // Admin search - simple query without LOWER to avoid PostgreSQL bytea issue
+    @Query("SELECT l FROM Listing l WHERE " +
+           "(:status IS NULL OR l.status = :status) AND " +
+           "(:type IS NULL OR l.listingType = :type) AND " +
+           "(:q IS NULL OR l.title LIKE %:q% OR l.location LIKE %:q%)")
     Page<Listing> adminSearch(
-        @Param("status") String status,
-        @Param("type") String type,
+        @Param("status") ListingStatus status,
+        @Param("type") ListingType type,
         @Param("q") String q,
         Pageable pageable
     );
