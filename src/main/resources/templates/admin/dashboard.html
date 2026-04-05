@@ -4,244 +4,187 @@
 <head><title>Dashboard — DriveEstate Admin</title></head>
 <body><section>
 
-<!-- ── Page Header ── -->
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
-    <h4 style="font-weight:700;color:var(--text);margin:0;">Dashboard</h4>
-    <p style="color:var(--text-dim);font-size:.82rem;margin:.2rem 0 0;">
-      Welcome back, Admin — here's what's happening on DriveEstate
-    </p>
-  </div>
-  <div style="font-size:.75rem;color:var(--text-dim);background:var(--navy-3);padding:.4rem .9rem;border-radius:8px;border:1px solid var(--border);">
-    <i class="fa fa-calendar-alt me-1" style="color:var(--gold);"></i>
-    <span th:text="${#temporals.format(#temporals.createNow(),'dd MMM yyyy')}">Today</span>
+    <h4 style="font-weight:700;margin:0;">Dashboard</h4>
+    <p style="color:#6B7280;font-size:.85rem;margin:.2rem 0 0;">Welcome back, Admin</p>
   </div>
 </div>
 
-<!-- ── KPI Cards ── -->
+<!-- KPI Cards -->
 <div class="row g-3 mb-4">
   <div class="col-6 col-lg-3">
-    <div class="stat-card blue">
-      <div class="stat-icon blue"><i class="fa fa-users"></i></div>
-      <div class="stat-value" th:text="${totalUsers}">0</div>
-      <div class="stat-label">Registered Users</div>
-      <div class="stat-trend up"><i class="fa fa-arrow-up me-1"></i>Active platform</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">👥</div>
+      <div class="value" th:text="${totalUsers}">0</div>
+      <div class="label">Registered Users</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card green">
-      <div class="stat-icon green"><i class="fa fa-check-circle"></i></div>
-      <div class="stat-value" th:text="${activeListings}">0</div>
-      <div class="stat-label">Active Listings</div>
-      <div class="stat-trend up"><i class="fa fa-arrow-up me-1"></i>Live on site</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">✅</div>
+      <div class="value" th:text="${activeListings}">0</div>
+      <div class="label">Active Listings</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card amber">
-      <div class="stat-icon amber"><i class="fa fa-clock"></i></div>
-      <div class="stat-value" th:text="${pendingCount}">0</div>
-      <div class="stat-label">Pending Review</div>
-      <div class="stat-trend neutral"><i class="fa fa-minus me-1"></i>Awaiting approval</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">⏳</div>
+      <div class="value" th:text="${pendingCount}">0</div>
+      <div class="label">Pending Review</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card purple">
-      <div class="stat-icon purple"><i class="fa fa-envelope"></i></div>
-      <div class="stat-value" th:text="${totalInquiries}">0</div>
-      <div class="stat-label">Inquiries</div>
-      <div class="stat-trend neutral"><i class="fa fa-minus me-1"></i>Buyer messages</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">💬</div>
+      <div class="value" th:text="${totalInquiries}">0</div>
+      <div class="label">Inquiries</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card gold">
-      <div class="stat-icon gold"><i class="fa fa-car"></i></div>
-      <div class="stat-value" th:text="${totalCars}">0</div>
-      <div class="stat-label">Cars Live</div>
-      <div class="stat-trend up"><i class="fa fa-arrow-up me-1"></i>Vehicles listed</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">🚗</div>
+      <div class="value" th:text="${totalCars}">0</div>
+      <div class="label">Cars Live</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card teal">
-      <div class="stat-icon teal"><i class="fa fa-map-marker-alt"></i></div>
-      <div class="stat-value" th:text="${totalLand}">0</div>
-      <div class="stat-label">Land Plots</div>
-      <div class="stat-trend up"><i class="fa fa-arrow-up me-1"></i>Plots listed</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">🌍</div>
+      <div class="value" th:text="${totalLand}">0</div>
+      <div class="label">Land Plots</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card red">
-      <div class="stat-icon red"><i class="fa fa-star"></i></div>
-      <div class="stat-value" th:text="${featuredCount}">0</div>
-      <div class="stat-label">Featured</div>
-      <div class="stat-trend neutral"><i class="fa fa-minus me-1"></i>Promoted listings</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">⭐</div>
+      <div class="value" th:text="${featuredCount}">0</div>
+      <div class="label">Featured</div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
-    <div class="stat-card sky">
-      <div class="stat-icon sky"><i class="fa fa-shield-alt"></i></div>
-      <div class="stat-value" th:text="${verifiedUsers}">0</div>
-      <div class="stat-label">Verified Users</div>
-      <div class="stat-trend up"><i class="fa fa-arrow-up me-1"></i>Trusted sellers</div>
+    <div class="stat-card">
+      <div style="font-size:2rem;margin-bottom:.5rem;">🛡️</div>
+      <div class="value" th:text="${verifiedUsers}">0</div>
+      <div class="label">Verified Users</div>
     </div>
   </div>
 </div>
 
-<!-- ── Chart + Pending ── -->
+<!-- Chart + Pending -->
 <div class="row g-4 mb-4">
   <div class="col-lg-7">
     <div class="card-box">
-      <div class="card-box-title">
-        <span><i class="fa fa-chart-bar me-2" style="color:var(--gold);"></i>Listing Activity — Last 14 Days</span>
-        <span style="font-size:.7rem;background:var(--navy-3);padding:.2rem .6rem;border-radius:6px;color:var(--text-dim);">Cars &amp; Land</span>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <strong>Listing Activity — Last 14 Days</strong>
       </div>
       <canvas id="actChart" height="120"></canvas>
     </div>
   </div>
-
   <div class="col-lg-5">
-    <div class="card-box" style="height:100%;">
-      <div class="card-box-title">
-        <span><i class="fa fa-clock me-2" style="color:var(--warning);"></i>Pending Review</span>
-        <a th:href="@{/admin/listings(status=PENDING)}">View All →</a>
+    <div class="card-box h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <strong>⏳ Pending Review</strong>
+        <a th:href="@{/admin/listings(status=PENDING)}" style="font-size:.8rem;color:var(--gold);">View All →</a>
       </div>
       <div th:if="${pendingItems == null or #lists.isEmpty(pendingItems)}"
-           style="text-align:center;padding:2rem;color:var(--text-dim);">
-        <i class="fa fa-check-circle" style="font-size:2.5rem;color:var(--success);opacity:.6;margin-bottom:.75rem;display:block;"></i>
-        All caught up!<br><small>No listings pending review</small>
+           style="text-align:center;padding:2rem;color:#9CA3AF;">
+        <i class="fa fa-check-circle" style="font-size:2rem;color:#10B981;display:block;margin-bottom:.5rem;"></i>
+        All caught up!
       </div>
-      <div th:unless="${pendingItems == null or #lists.isEmpty(pendingItems)}">
-        <div th:each="item : ${pendingItems}"
-             style="display:flex;align-items:center;gap:.75rem;padding:.65rem 0;border-bottom:1px solid var(--border);">
-          <div style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;"
-               th:style="${item.listingType.name() == 'CAR'} ? 'background:var(--gold-dim);' : 'background:rgba(20,184,166,.15);'">
-            <span th:text="${item.listingType.name() == 'CAR' ? '🚗' : '🌍'}"></span>
-          </div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:.8rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
-                 th:text="${item.title}"></div>
-            <div style="font-size:.7rem;color:var(--text-dim);"
-                 th:text="${(item.seller != null ? item.seller.name : 'Unknown') + ' · ' + item.formattedPrice}"></div>
-          </div>
-          <a th:href="@{/admin/listings/{id}(id=${item.id})}"
-             style="background:var(--navy-3);border:1px solid var(--border);color:var(--text-dim);font-size:.68rem;padding:.25rem .6rem;border-radius:6px;text-decoration:none;white-space:nowrap;">
-            Review →
-          </a>
+      <div th:each="item : ${pendingItems}"
+           style="display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid #f3f4f6;">
+        <span th:text="${item.listingType.name() == 'CAR' ? '🚗' : '🌍'}" style="font-size:1.5rem;"></span>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.82rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+               th:text="${item.title}"></div>
+          <div style="font-size:.72rem;color:#6B7280;" th:text="${item.formattedPrice}"></div>
         </div>
+        <a th:href="@{/admin/listings/{id}(id=${item.id})}"
+           style="font-size:.72rem;background:#F3F4F6;padding:.25rem .6rem;border-radius:6px;text-decoration:none;color:#374151;white-space:nowrap;">
+          Review →
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── Recent Users + Activity ── -->
+<!-- Recent Users + Activity -->
 <div class="row g-4">
   <div class="col-lg-6">
     <div class="card-box">
-      <div class="card-box-title">
-        <span><i class="fa fa-users me-2" style="color:var(--info);"></i>Recent Users</span>
-        <a th:href="@{/admin/users}">View All →</a>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <strong>👥 Recent Users</strong>
+        <a th:href="@{/admin/users}" style="font-size:.8rem;color:var(--gold);">View All →</a>
       </div>
       <table class="table mb-0">
         <thead>
           <tr>
-            <th>User</th>
-            <th>County</th>
-            <th>Verified</th>
-            <th>Joined</th>
+            <th>Name</th><th>County</th><th>Verified</th><th>Joined</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="u : ${recentUsers}">
             <td>
-              <div style="display:flex;align-items:center;gap:.6rem;">
-                <div style="width:30px;height:30px;border-radius:8px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--gold);"
-                     th:text="${u.name.charAt(0)}"></div>
-                <div>
-                  <div style="font-weight:600;font-size:.82rem;" th:text="${u.name}"></div>
-                  <div style="font-size:.7rem;color:var(--text-dim);" th:text="${u.email}"></div>
-                </div>
-              </div>
+              <div style="font-weight:600;font-size:.82rem;" th:text="${u.name}"></div>
+              <div style="font-size:.72rem;color:#9CA3AF;" th:text="${u.email}"></div>
             </td>
-            <td style="color:var(--text-dim);" th:text="${u.county != null ? u.county : '—'}"></td>
+            <td style="font-size:.82rem;" th:text="${u.county != null ? u.county : '—'}"></td>
             <td>
-              <span th:if="${u.verified}" style="color:var(--success);font-size:.85rem;"><i class="fa fa-check-circle"></i></span>
-              <span th:unless="${u.verified}" style="color:var(--text-dim);font-size:.85rem;"><i class="fa fa-minus-circle"></i></span>
+              <span th:if="${u.verified}" style="color:#10B981;">✓</span>
+              <span th:unless="${u.verified}" style="color:#D1D5DB;">—</span>
             </td>
-            <td style="color:var(--text-dim);font-size:.75rem;"
-                th:text="${u.createdAt != null ? #temporals.format(u.createdAt,'dd MMM') : '-'}"></td>
+            <td style="font-size:.75rem;color:#9CA3AF;"
+                th:text="${u.createdAt != null ? #temporals.format(u.createdAt,'dd MMM') : '—'}"></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
   <div class="col-lg-6">
     <div class="card-box">
-      <div class="card-box-title">
-        <span><i class="fa fa-history me-2" style="color:var(--success);"></i>Recent Activity</span>
-        <a th:href="@{/admin/logs}">View All →</a>
-      </div>
-      <div th:each="log : ${recentLogs}"
-           style="display:flex;align-items:flex-start;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border);">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:.35rem;flex-shrink:0;"></div>
-        <div>
-          <div style="font-size:.8rem;font-weight:600;color:var(--text);" th:text="${log.action}"></div>
-          <div style="font-size:.7rem;color:var(--text-dim);"
-               th:text="${(log.userName != null ? log.userName : 'System') + (log.createdAt != null ? ' · ' + #temporals.format(log.createdAt,'dd MMM HH:mm') : '')}"></div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <strong>📋 Recent Activity</strong>
+        <a th:href="@{/admin/logs}" style="font-size:.8rem;color:var(--gold);">View All →</a>
       </div>
       <div th:if="${recentLogs == null or #lists.isEmpty(recentLogs)}"
-           style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem;">
+           style="text-align:center;padding:2rem;color:#9CA3AF;font-size:.85rem;">
         No activity recorded yet
+      </div>
+      <div th:each="log : ${recentLogs}"
+           style="display:flex;gap:.75rem;padding:.55rem 0;border-bottom:1px solid #f3f4f6;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:.35rem;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:.82rem;font-weight:600;" th:text="${log.action}"></div>
+          <div style="font-size:.72rem;color:#9CA3AF;"
+               th:text="${(log.userName != null ? log.userName : 'System')}"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── Chart Script ── -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script th:inline="javascript">
 /*<![CDATA[*/
 var labels = /*[[${chartLabels}]]*/ [];
-var cars   = /*[[${chartCars}]]*/  [];
-var land   = /*[[${chartLand}]]*/  [];
+var cars   = /*[[${chartCars}]]*/   [];
+var land   = /*[[${chartLand}]]*/   [];
 new Chart(document.getElementById('actChart'), {
   type: 'bar',
   data: {
     labels: labels,
     datasets: [
-      {
-        label: 'Cars',
-        data: cars,
-        backgroundColor: 'rgba(201,168,76,.8)',
-        borderRadius: 6, borderSkipped: false
-      },
-      {
-        label: 'Land',
-        data: land,
-        backgroundColor: 'rgba(20,184,166,.6)',
-        borderRadius: 6, borderSkipped: false
-      }
+      { label: 'Cars', data: cars, backgroundColor: '#C9A84C', borderRadius: 4 },
+      { label: 'Land', data: land, backgroundColor: '#14B8A6', borderRadius: 4 }
     ]
   },
   options: {
     responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: { color: '#94A3B8', font: { size: 11 }, boxWidth: 10, borderRadius: 4 }
-      }
-    },
+    plugins: { legend: { position: 'top' } },
     scales: {
-      x: {
-        stacked: true,
-        grid: { color: 'rgba(255,255,255,.04)' },
-        ticks: { color: '#64748B', font: { size: 10 } }
-      },
-      y: {
-        stacked: true, beginAtZero: true,
-        grid: { color: 'rgba(255,255,255,.04)' },
-        ticks: { color: '#64748B', precision: 0, font: { size: 10 } }
-      }
+      x: { stacked: true, grid: { display: false } },
+      y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } }
     }
   }
 });
