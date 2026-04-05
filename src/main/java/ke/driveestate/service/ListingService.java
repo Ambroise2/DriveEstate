@@ -41,7 +41,9 @@ public class ListingService {
     }
 
     public Page<Listing> adminSearch(ListingStatus status, ListingType type, String q, int page) {
-        return listingRepo.adminSearch(status, type, q, PageRequest.of(page, 20, Sort.by("createdAt").descending()));
+        String statusStr = status != null ? status.name() : null;
+        String typeStr   = type   != null ? type.name()   : null;
+        return listingRepo.adminSearch(statusStr, typeStr, q, PageRequest.of(page, 20, Sort.by("created_at").descending()));
     }
 
     public List<Listing> quickSearch(String q) { return listingRepo.quickSearch(q, PageRequest.of(0, 8)); }

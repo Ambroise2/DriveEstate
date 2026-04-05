@@ -32,10 +32,9 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
            "(:fuel IS NULL OR l.fuelType = :fuel) AND " +
            "(:transmission IS NULL OR l.transmission = :transmission) AND " +
            "(:zoning IS NULL OR l.zoning = :zoning) AND " +
-           "(:q IS NULL OR LOWER(l.title) LIKE LOWER(CONCAT('%', :q, '%')) OR " +
-           " LOWER(l.description) LIKE LOWER(CONCAT('%', :q, '%')) OR " +
-           " LOWER(l.location) LIKE LOWER(CONCAT('%', :q, '%')) OR " +
-           " LOWER(l.make) LIKE LOWER(CONCAT('%', :q, '%')))")
+           "(:q IS NULL OR l.title LIKE CONCAT('%', :q, '%') OR " +
+           " l.location LIKE CONCAT('%', :q, '%') OR " +
+           " l.make LIKE CONCAT('%', :q, '%'))")
     Page<Listing> searchListings(
         @Param("type") ListingType type,
         @Param("county") String county,
@@ -49,17 +48,22 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
         Pageable pageable
     );
 
-    @Query("SELECT l FROM Listing l WHERE LOWER(l.title) LIKE LOWER(CONCAT('%', :q, '%')) AND l.status = 'ACTIVE' ORDER BY l.views DESC")
+    @Query("SELECT l FROM Listing l WHERE l.title LIKE CONCAT('%', :q, '%') AND l.status = 'ACTIVE' ORDER BY l.views DESC")
     List<Listing> quickSearch(@Param("q") String q, Pageable pageable);
 
     // Admin search
-    @Query("SELECT l FROM Listing l WHERE " +
-           "(:status IS NULL OR l.status = :status) AND " +
-           "(:type IS NULL OR l.listingType = :type) AND " +
-           "(:q IS NULL OR LOWER(l.title) LIKE LOWER(CONCAT('%', :q, '%')))")
+    @Query(value = "SELECT * FROM listings l WHERE " +
+           "(:status IS NULL OR l.status = CAST(:status AS VARCHAR)) AND " +
+           "(:type IS NULL OR l.listing_type = CAST(:type AS VARCHAR)) AND " +
+           "(:q IS NULL OR l.title ILIKE CONCAT('%', :q, '%'))",
+           countQuery = "SELECT COUNT(*) FROM listings l WHERE " +
+           "(:status IS NULL OR l.status = CAST(:status AS VARCHAR)) AND " +
+           "(:type IS NULL OR l.listing_type = CAST(:type AS VARCHAR)) AND " +
+           "(:q IS NULL OR l.title ILIKE CONCAT('%', :q, '%'))",
+           nativeQuery = true)
     Page<Listing> adminSearch(
-        @Param("status") ListingStatus status,
-        @Param("type") ListingType type,
+        @Param("status") String status,
+        @Param("type") String type,
         @Param("q") String q,
         Pageable pageable
     );
