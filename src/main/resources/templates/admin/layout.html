@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta th:name="_csrf" th:content="${_csrf.token}"/>
-<title th:replace="${title}">Admin — DriveEstate</title>
+<title>Admin — DriveEstate</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -318,7 +318,7 @@ hr { border-color: var(--border); }
 <!-- ── Main Content ──────────────────────────────────────────────────────── -->
 <div class="main-content">
   <div class="topbar">
-    <div class="topbar-title" th:replace="${title}">Admin</div>
+    <div class="topbar-title">Admin Panel</div>
     <div class="topbar-right">
       <div class="admin-pill"><span class="dot"></span> Admin Online</div>
       <a th:href="@{/}" class="btn-view-site"><i class="fa fa-external-link-alt me-1"></i> View Site</a>
