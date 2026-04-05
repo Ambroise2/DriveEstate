@@ -32,9 +32,9 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
            "(:fuel IS NULL OR l.fuelType = :fuel) AND " +
            "(:transmission IS NULL OR l.transmission = :transmission) AND " +
            "(:zoning IS NULL OR l.zoning = :zoning) AND " +
-           "(:q IS NULL OR l.title LIKE CONCAT('%', :q, '%') OR " +
+           "(:q IS NULL OR (l.title LIKE CONCAT('%', :q, '%') OR " +
            " l.location LIKE CONCAT('%', :q, '%') OR " +
-           " l.make LIKE CONCAT('%', :q, '%'))")
+           " l.make LIKE CONCAT('%', :q, '%')))")
     Page<Listing> searchListings(
         @Param("type") ListingType type,
         @Param("county") String county,

@@ -35,7 +35,7 @@ public class ListingService {
             case "price_desc" -> Sort.by("price").descending();
             case "views"      -> Sort.by("views").descending();
             case "oldest"     -> Sort.by("createdAt").ascending();
-            default           -> Sort.by("featured").descending().and(Sort.by("createdAt").descending());
+            default           -> Sort.by("createdAt").descending();
         };
         return listingRepo.searchListings(type, county, minPrice, maxPrice, condition, fuel, transmission, zoning, q, PageRequest.of(page, 12, s));
     }
