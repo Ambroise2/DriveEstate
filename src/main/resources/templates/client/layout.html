@@ -32,11 +32,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);tran
 h1,h2,h3,.brand{font-family:'Cormorant Garamond',serif;}
 
 /* ── Topstrip ── */
-.topstrip{background:#081020;color:rgba(255,255,255,.5);font-size:.73rem;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.topstrip{background:#081020;color:rgba(255,255,255,.5);font-size:.73rem;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);position:relative;z-index:10000;}
 .topstrip a{color:var(--gold);text-decoration:none;}
 
 /* ── Navbar ── */
-.navbar-main{background:var(--nav-bg);border-bottom:2px solid rgba(201,168,76,.2);padding:.65rem 0;position:sticky;top:0;z-index:999;backdrop-filter:blur(20px);box-shadow:var(--shadow);}
+.navbar-main{background:var(--nav-bg);border-bottom:2px solid rgba(201,168,76,.2);padding:.65rem 0;position:sticky;top:0;z-index:9999;backdrop-filter:blur(20px);box-shadow:var(--shadow);}
 .navbar-main .collapse.show,.navbar-main .collapsing{background:var(--nav-bg);padding:.5rem 0;border-top:1px solid var(--border);}
 .navbar-main .navbar-toggler{border:1px solid var(--border);padding:.3rem .6rem;color:var(--text2);}
 .navbar-main .navbar-toggler-icon{filter:invert(1) opacity(.6);}
@@ -59,7 +59,7 @@ h1,h2,h3,.brand{font-family:'Cormorant Garamond',serif;}
 .btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
 
 /* ── Cards ── */
-.card-listing{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:all .25s;border:1px solid var(--border);}
+.card-listing{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:all .25s;border:1px solid var(--border);position:relative;z-index:0;}
 .card-listing:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,.2);border-color:rgba(201,168,76,.25);}
 .card-img{height:195px;background:linear-gradient(135deg,var(--navy),var(--navy-l));display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;}
 .price{font-size:1.25rem;font-weight:700;color:var(--gold);}
