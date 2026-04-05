@@ -13,10 +13,10 @@
   <div class="row g-3 mb-4">
     <div th:each="s,i : ${ { {totalViews,'👁️','Total Views','#3B82F6'},{myListings.size(),'📋','My Listings','#C9A84C'},{totalInquiries,'💬','Inquiries','#10B981'},{favCount,'❤️','Saved','#EF4444'} } }"
          class="col-6 col-lg-3">
-      <div style="background:#fff;border-radius:12px;padding:1.25rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+      <div style="background:var(--bg3);border-radius:12px;padding:1.25rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);">
         <div style="font-size:2rem;margin-bottom:.2rem;" th:text="${s[1]}"></div>
         <div style="font-size:1.9rem;font-weight:700;font-family:'Cormorant Garamond',serif;" th:style="'color:'+${s[3]}+';'" th:text="${s[0]}"></div>
-        <div style="font-size:.78rem;color:#6B7280;" th:text="${s[2]}"></div>
+        <div style="font-size:.78rem;color:var(--text2);" th:text="${s[2]}"></div>
       </div>
     </div>
   </div>
@@ -24,18 +24,18 @@
   <div class="row g-4">
     <div class="col-lg-8">
       <!-- Listings Table -->
-      <div style="background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+      <div style="background:var(--bg3);border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);">
         <div class="d-flex justify-content-between mb-3">
           <h5 style="font-weight:700;margin:0;">My Listings</h5>
           <a th:href="@{/post-listing}" class="btn btn-gold btn-sm"><i class="fa fa-plus me-1"></i>Post New</a>
         </div>
-        <div th:if="${myListings.isEmpty()}" class="text-center py-4" style="color:#9CA3AF;">
+        <div th:if="${myListings.isEmpty()}" class="text-center py-4" style="color:var(--text2);">
           <div style="font-size:3rem;">📋</div>
           <p>No listings yet. <a th:href="@{/post-listing}" style="color:#C9A84C;">Post your first listing</a></p>
         </div>
         <div th:unless="${myListings.isEmpty()}" class="table-responsive">
           <table class="table table-hover" style="font-size:.84rem;">
-            <thead style="background:#F8F9FB;"><tr><th>Title</th><th>Price</th><th>Status</th><th>Views</th><th></th></tr></thead>
+            <thead style="background:var(--card);"><tr><th>Title</th><th>Price</th><th>Status</th><th>Views</th><th></th></tr></thead>
             <tbody>
               <tr th:each="l : ${myListings}">
                 <td><a th:href="@{/listing/{id}(id=${l.id})}" style="color:#0A1628;font-weight:500;text-decoration:none;" th:text="${#strings.abbreviate(l.title,40)}"></a></td>
@@ -54,7 +54,7 @@
       </div>
 
       <!-- Chart -->
-      <div th:unless="${topListings.isEmpty()}" style="background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-top:1.25rem;">
+      <div th:unless="${topListings.isEmpty()}" style="background:var(--bg3);border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-top:1.25rem;">
         <h5 style="font-weight:700;margin-bottom:1rem;">Views by Listing</h5>
         <canvas id="viewsChart" height="100"></canvas>
       </div>
@@ -63,27 +63,27 @@
     <!-- Right Sidebar -->
     <div class="col-lg-4">
       <!-- Recent Inquiries -->
-      <div style="background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:1.25rem;">
+      <div style="background:var(--bg3);border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:1.25rem;">
         <h6 style="font-weight:700;margin-bottom:1rem;">Recent Inquiries</h6>
-        <div th:if="${recentInquiries.isEmpty()}" style="font-size:.85rem;color:#9CA3AF;text-align:center;">No inquiries yet</div>
+        <div th:if="${recentInquiries.isEmpty()}" style="font-size:.85rem;color:var(--text2);text-align:center;">No inquiries yet</div>
         <div th:each="inq : ${recentInquiries}" style="padding:.6rem 0;border-bottom:1px solid #F3F4F6;">
           <div style="font-size:.82rem;font-weight:600;" th:text="${inq.sender.name}"></div>
-          <div style="font-size:.75rem;color:#6B7280;" th:text="${#strings.abbreviate(inq.message,55)}"></div>
-          <div style="font-size:.7rem;color:#9CA3AF;" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
+          <div style="font-size:.75rem;color:var(--text2);" th:text="${#strings.abbreviate(inq.message,55)}"></div>
+          <div style="font-size:.7rem;color:var(--text2);" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
         </div>
         <a th:href="@{/messages}" class="btn btn-outline-secondary btn-sm w-100 mt-2">View All Messages</a>
       </div>
 
       <!-- Notifications -->
-      <div style="background:#fff;border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);">
+      <div style="background:var(--bg3);border-radius:14px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.06);">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h6 style="font-weight:700;margin:0;">Notifications</h6>
           <button th:unless="${notifications.isEmpty()}" onclick="markRead()" class="btn btn-sm btn-outline-secondary" style="font-size:.72rem;padding:.1rem .5rem;">Mark Read</button>
         </div>
-        <div th:if="${notifications.isEmpty()}" style="font-size:.85rem;color:#9CA3AF;text-align:center;padding:.75rem 0;">All caught up! 🎉</div>
+        <div th:if="${notifications.isEmpty()}" style="font-size:.85rem;color:var(--text2);text-align:center;padding:.75rem 0;">All caught up! 🎉</div>
         <div th:each="n : ${notifications}" style="padding:.55rem 0;border-bottom:1px solid #F3F4F6;font-size:.8rem;">
           <div style="font-weight:600;" th:style="${n.type == 'success'} ? 'color:#065F46;' : (${n.type == 'danger'} ? 'color:#991B1B;' : 'color:#1E3160;')" th:text="${n.title}"></div>
-          <div style="color:#6B7280;font-size:.75rem;" th:text="${#strings.abbreviate(n.message,70)}"></div>
+          <div style="color:var(--text2);font-size:.75rem;" th:text="${#strings.abbreviate(n.message,70)}"></div>
         </div>
       </div>
     </div>

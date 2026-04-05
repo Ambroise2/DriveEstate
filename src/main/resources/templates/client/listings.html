@@ -64,9 +64,9 @@
     <!-- Grid -->
     <div class="col-lg-9">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <span style="font-size:.85rem;color:#6B7280;" th:text="${totalItems + ' results'}"></span>
+        <span style="font-size:.85rem;color:var(--text2);" th:text="${totalItems + ' results'}"></span>
         <div class="d-flex gap-2 align-items-center">
-          <label style="font-size:.82rem;color:#6B7280;">Sort:</label>
+          <label style="font-size:.82rem;color:var(--text2);">Sort:</label>
           <select class="form-select form-select-sm" style="width:auto;" onchange="window.location.href='/listings?sort='+this.value">
             <option th:each="s : ${ {{'newest','Newest'},{'oldest','Oldest'},{'price_asc','Price ↑'},{'price_desc','Price ↓'},{'views','Most Viewed'}} }"
                     th:value="${s[0]}" th:text="${s[1]}" th:selected="${sort == s[0]}"></option>

@@ -12,16 +12,16 @@
   <div class="tab-content">
     <!-- Received -->
     <div class="tab-pane fade show active" id="received">
-      <div th:if="${received.isEmpty()}" class="text-center py-5" style="color:#9CA3AF;"><div style="font-size:3.5rem;">📭</div><p class="mt-2">No messages yet</p></div>
-      <div th:each="inq : ${received}" style="background:#fff;border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid #eee;">
+      <div th:if="${received.isEmpty()}" class="text-center py-5" style="color:var(--text2);"><div style="font-size:3.5rem;">📭</div><p class="mt-2">No messages yet</p></div>
+      <div th:each="inq : ${received}" style="background:var(--bg3);border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid var(--border);">
         <div class="d-flex justify-content-between align-items-start">
           <div>
             <div style="font-weight:600;" th:text="${inq.sender.name}"></div>
-            <div style="font-size:.8rem;color:#6B7280;">re: <a th:href="@{/listing/{id}(id=${inq.listing.id})}" th:text="${inq.listing.title}" style="color:#C9A84C;text-decoration:none;"></a></div>
+            <div style="font-size:.8rem;color:var(--text2);">re: <a th:href="@{/listing/{id}(id=${inq.listing.id})}" th:text="${inq.listing.title}" style="color:#C9A84C;text-decoration:none;"></a></div>
           </div>
-          <div style="font-size:.75rem;color:#9CA3AF;" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
+          <div style="font-size:.75rem;color:var(--text2);" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
         </div>
-        <p style="margin:.75rem 0 .5rem;font-size:.88rem;color:#374151;" th:text="${inq.message}"></p>
+        <p style="margin:.75rem 0 .5rem;font-size:.88rem;color:var(--text);" th:text="${inq.message}"></p>
         <div th:if="${inq.reply != null}" style="background:#F0FDF4;border-left:3px solid #10B981;padding:.65rem .85rem;border-radius:6px;font-size:.85rem;margin-bottom:.5rem;">
           <strong style="color:#065F46;">Your reply:</strong> <span th:text="${inq.reply}"></span>
         </div>
@@ -36,20 +36,20 @@
     </div>
     <!-- Sent -->
     <div class="tab-pane fade" id="sent">
-      <div th:if="${sent.isEmpty()}" class="text-center py-5" style="color:#9CA3AF;"><div style="font-size:3.5rem;">📤</div><p class="mt-2">No sent messages</p></div>
-      <div th:each="inq : ${sent}" style="background:#fff;border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid #eee;">
+      <div th:if="${sent.isEmpty()}" class="text-center py-5" style="color:var(--text2);"><div style="font-size:3.5rem;">📤</div><p class="mt-2">No sent messages</p></div>
+      <div th:each="inq : ${sent}" style="background:var(--bg3);border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid var(--border);">
         <div class="d-flex justify-content-between">
           <div>
             <div style="font-weight:600;">To: <span th:text="${inq.receiver.name}"></span></div>
-            <div style="font-size:.8rem;color:#6B7280;">re: <a th:href="@{/listing/{id}(id=${inq.listing.id})}" th:text="${inq.listing.title}" style="color:#C9A84C;text-decoration:none;"></a></div>
+            <div style="font-size:.8rem;color:var(--text2);">re: <a th:href="@{/listing/{id}(id=${inq.listing.id})}" th:text="${inq.listing.title}" style="color:#C9A84C;text-decoration:none;"></a></div>
           </div>
-          <div style="font-size:.75rem;color:#9CA3AF;" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
+          <div style="font-size:.75rem;color:var(--text2);" th:text="${#temporals.format(inq.createdAt,'dd MMM yyyy')}"></div>
         </div>
-        <p style="margin:.75rem 0 .25rem;font-size:.88rem;color:#374151;" th:text="${inq.message}"></p>
+        <p style="margin:.75rem 0 .25rem;font-size:.88rem;color:var(--text);" th:text="${inq.message}"></p>
         <div th:if="${inq.reply != null}" style="background:#EFF6FF;border-left:3px solid #3B82F6;padding:.65rem .85rem;border-radius:6px;font-size:.85rem;margin-top:.5rem;">
           <strong style="color:#1E40AF;">Seller replied:</strong> <span th:text="${inq.reply}"></span>
         </div>
-        <div th:unless="${inq.reply != null}" style="font-size:.75rem;color:#9CA3AF;margin-top:.5rem;"><i class="fa fa-clock me-1"></i>Awaiting reply</div>
+        <div th:unless="${inq.reply != null}" style="font-size:.75rem;color:var(--text2);margin-top:.5rem;"><i class="fa fa-clock me-1"></i>Awaiting reply</div>
       </div>
     </div>
   </div>

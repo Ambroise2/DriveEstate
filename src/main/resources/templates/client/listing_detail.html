@@ -21,10 +21,10 @@
            style="border-radius:16px;height:380px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:1.5rem;">
         <div style="font-size:8rem;opacity:.45;" th:text="${listing.listingType.name() == 'CAR' ? '🚗' : '🌍'}"></div>
         <div style="position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:6px;">
-          <span th:if="${listing.featured}" class="badge" style="background:#FFFBEB;color:#92400E;border:1px solid #FCD34D;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">⭐ Featured</span>
+          <span th:if="${listing.featured}" class="badge" style="background:rgba(201,168,76,.12);color:var(--gold);border:1px solid #FCD34D;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">⭐ Featured</span>
           <span th:if="${listing.verified}" class="badge" style="background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">✓ Verified</span>
           <span th:if="${listing.negotiable}" class="badge" style="background:#EDE9FE;color:#5B21B6;border:1px solid #C4B5FD;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">💬 Negotiable</span>
-          <span th:if="${listing.installmentAvailable}" class="badge" style="background:#F0F9FF;color:#0369A1;border:1px solid #BAE6FD;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">📆 Installment</span>
+          <span th:if="${listing.installmentAvailable}" class="badge" style="background:rgba(14,165,233,.12);color:#38BDF8;border:1px solid #BAE6FD;font-size:.7rem;padding:.3rem .65rem;border-radius:20px;">📆 Installment</span>
         </div>
         <div style="position:absolute;bottom:14px;right:14px;color:rgba(255,255,255,.5);font-size:.8rem;">
           <i class="fa fa-eye me-1"></i><span th:text="${listing.views}"></span> views
@@ -40,40 +40,40 @@
       <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
         <div>
           <h1 style="font-size:1.6rem;font-weight:700;margin-bottom:.2rem;" th:text="${listing.title}"></h1>
-          <div style="color:#6B7280;font-size:.875rem;">
+          <div style="color:var(--text2);font-size:.875rem;">
             <i class="fa fa-map-marker-alt me-1" style="color:#C9A84C;"></i>
             <span th:text="${listing.location}"></span>, <span th:text="${listing.county}"></span>
           </div>
         </div>
         <div class="text-end">
           <div style="font-size:2rem;font-weight:800;color:#C9A84C;" th:text="${listing.formattedPrice}"></div>
-          <div style="font-size:.78rem;color:#9CA3AF;" th:text="'Listed ' + ${#temporals.format(listing.createdAt,'dd MMM yyyy')}"></div>
+          <div style="font-size:.78rem;color:var(--text2);" th:text="'Listed ' + ${#temporals.format(listing.createdAt,'dd MMM yyyy')}"></div>
         </div>
       </div>
 
       <!-- Car Specs -->
-      <div th:if="${listing.listingType.name() == 'CAR'}" style="background:#F8F9FB;border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
+      <div th:if="${listing.listingType.name() == 'CAR'}" style="background:var(--card);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
         <h5 style="font-weight:700;margin-bottom:1rem;">Vehicle Specifications</h5>
         <div class="row g-2">
           <div th:each="spec : ${ { {listing.make,'🏭','Make'},{listing.model,'🚘','Model'},{listing.year,'📅','Year'},{listing.fuelType,'⛽','Fuel'},{listing.transmission,'⚙️','Gearbox'},{listing.color,'🎨','Color'},{listing.condition,'🏷️','Condition'},{listing.driveType,'🚗','Drive'},{listing.doors,'🚪','Doors'},{listing.seats,'💺','Seats'} } }"
                th:if="${spec[0] != null}" class="col-6 col-md-4 col-lg-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
               <div style="font-size:1.4rem;" th:text="${spec[1]}"></div>
-              <div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.5px;" th:text="${spec[2]}"></div>
+              <div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;" th:text="${spec[2]}"></div>
               <div style="font-size:.9rem;font-weight:600;margin-top:.1rem;" th:text="${spec[0]}"></div>
             </div>
           </div>
           <div th:if="${listing.mileage != null}" class="col-6 col-md-4 col-lg-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
               <div style="font-size:1.4rem;">🛣️</div>
-              <div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Mileage</div>
+              <div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Mileage</div>
               <div style="font-size:.9rem;font-weight:600;margin-top:.1rem;" th:text="${#numbers.formatInteger(listing.mileage,1,'COMMA') + ' km'}"></div>
             </div>
           </div>
           <div th:if="${listing.engineCc != null}" class="col-6 col-md-4 col-lg-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
               <div style="font-size:1.4rem;">🔧</div>
-              <div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Engine</div>
+              <div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Engine</div>
               <div style="font-size:.9rem;font-weight:600;margin-top:.1rem;" th:text="${#numbers.formatInteger(listing.engineCc,1,'COMMA') + ' cc'}"></div>
             </div>
           </div>
@@ -81,48 +81,48 @@
       </div>
 
       <!-- Land Specs -->
-      <div th:if="${listing.listingType.name() == 'LAND'}" style="background:#F8F9FB;border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
+      <div th:if="${listing.listingType.name() == 'LAND'}" style="background:var(--card);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;">
         <h5 style="font-weight:700;margin-bottom:1rem;">Land Details</h5>
         <div class="row g-2">
           <div class="col-6 col-md-3" th:if="${listing.sizeAcres != null}">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">📐</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Size</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">📐</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Size</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.sizeAcres + ' Acres'}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3" th:if="${listing.zoning != null}">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">🏷️</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Zoning</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">🏷️</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Zoning</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.zoning}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3" th:if="${listing.roadAccess != null}">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">🛣️</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Road Access</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">🛣️</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Road Access</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.roadAccess}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">💧</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Water</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">💧</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Water</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.waterAvailable ? 'Available' : 'None'}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">⚡</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Electricity</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">⚡</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Electricity</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.electricityAvailable ? 'Available' : 'None'}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">🚧</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Fenced</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">🚧</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Fenced</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.fenced ? 'Yes' : 'No'}"></div>
             </div>
           </div>
           <div class="col-6 col-md-3" th:if="${listing.titleType != null}">
-            <div style="background:#fff;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #eee;">
-              <div style="font-size:1.4rem;">📜</div><div style="font-size:.68rem;color:#9CA3AF;font-weight:600;text-transform:uppercase;">Title</div>
+            <div style="background:var(--bg3);border-radius:10px;padding:.7rem;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:1.4rem;">📜</div><div style="font-size:.68rem;color:var(--text2);font-weight:600;text-transform:uppercase;">Title</div>
               <div style="font-size:.9rem;font-weight:600;" th:text="${listing.titleType}"></div>
             </div>
           </div>
@@ -130,9 +130,9 @@
       </div>
 
       <!-- Description -->
-      <div style="background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #eee;margin-bottom:1.5rem;">
+      <div style="background:var(--bg3);border-radius:14px;padding:1.5rem;border:1px solid var(--border);margin-bottom:1.5rem;">
         <h5 style="font-weight:700;margin-bottom:.75rem;">Description</h5>
-        <p style="color:#374151;line-height:1.85;white-space:pre-line;" th:text="${listing.description}"></p>
+        <p style="color:var(--text);line-height:1.85;white-space:pre-line;" th:text="${listing.description}"></p>
       </div>
 
       <!-- Loan Calculator (cars only) -->
@@ -186,19 +186,19 @@
 
     <!-- Sidebar -->
     <div class="col-lg-4">
-      <div style="background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #eee;position:sticky;top:75px;">
+      <div style="background:var(--bg3);border-radius:14px;padding:1.5rem;border:1px solid var(--border);position:sticky;top:75px;">
         <!-- Seller -->
-        <div style="font-size:.72rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:1px;margin-bottom:.85rem;">Seller Information</div>
+        <div style="font-size:.72rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.85rem;">Seller Information</div>
         <div class="d-flex align-items-center gap-3 mb-3">
           <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#E8C97A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#0A1628;font-size:1.2rem;"
                th:text="${listing.seller.initial}"></div>
           <div>
             <div style="font-weight:600;" th:text="${listing.seller.name}"></div>
-            <div style="font-size:.78rem;color:#6B7280;" th:text="${listing.seller.county}"></div>
+            <div style="font-size:.78rem;color:var(--text2);" th:text="${listing.seller.county}"></div>
             <span th:if="${listing.seller.verified}" class="badge" style="background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;font-size:.65rem;">✓ Verified Seller</span>
           </div>
         </div>
-        <div style="font-size:.78rem;color:#6B7280;margin-bottom:1rem;">
+        <div style="font-size:.78rem;color:var(--text2);margin-bottom:1rem;">
           <i class="fa fa-calendar me-1"></i>Member since <span th:text="${#temporals.format(listing.seller.createdAt,'MMM yyyy')}"></span>
         </div>
 
@@ -228,13 +228,13 @@
           </form>
         </div>
         <div sec:authorize="!isAuthenticated()" style="text-align:center;padding:.5rem 0;">
-          <p style="font-size:.82rem;color:#6B7280;margin-bottom:.5rem;">Log in to contact the seller</p>
+          <p style="font-size:.82rem;color:var(--text2);margin-bottom:.5rem;">Log in to contact the seller</p>
           <a th:href="@{/auth/login}" class="btn btn-gold btn-sm">Login to Contact</a>
         </div>
 
         <!-- Safety -->
-        <div style="background:#FFFBEB;border:1px solid #FCD34D;border-radius:12px;padding:1rem;margin-top:1.25rem;">
-          <div style="font-weight:700;color:#92400E;font-size:.82rem;margin-bottom:.5rem;"><i class="fa fa-shield-alt me-1"></i>Safety Tips</div>
+        <div style="background:rgba(201,168,76,.12);border:1px solid #FCD34D;border-radius:12px;padding:1rem;margin-top:1.25rem;">
+          <div style="font-weight:700;color:var(--gold);font-size:.82rem;margin-bottom:.5rem;"><i class="fa fa-shield-alt me-1"></i>Safety Tips</div>
           <ul style="font-size:.78rem;color:#78350F;padding-left:1rem;margin:0;line-height:2;">
             <li>Meet in a public place</li><li>Do not pay before inspecting</li>
             <li>Verify all documents</li><li>Use NTSA for vehicle history</li>

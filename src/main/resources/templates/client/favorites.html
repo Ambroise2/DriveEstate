@@ -7,7 +7,7 @@
 <div class="container-fluid px-4 pb-5">
   <div th:if="${favorites.isEmpty()}" class="text-center py-5">
     <div style="font-size:4rem;">💔</div><h5 class="mt-2">No saved listings yet</h5>
-    <p style="color:#9CA3AF;">Browse listings and tap the heart icon to save them here.</p>
+    <p style="color:var(--text2);">Browse listings and tap the heart icon to save them here.</p>
     <a th:href="@{/listings}" class="btn btn-gold">Browse Listings</a>
   </div>
   <div th:unless="${favorites.isEmpty()}" class="row g-3">
@@ -19,8 +19,8 @@
         <div style="padding:1rem;">
           <div style="font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" th:text="${fav.listing.title}"></div>
           <div class="price" th:text="${fav.listing.formattedPrice}"></div>
-          <div style="font-size:.78rem;color:#6B7280;margin-top:.25rem;"><i class="fa fa-map-marker-alt me-1" style="color:#C9A84C;"></i><span th:text="${fav.listing.location}"></span></div>
-          <div style="font-size:.72rem;color:#9CA3AF;margin-top:.2rem;">Saved <span th:text="${#temporals.format(fav.savedAt,'dd MMM yyyy')}"></span></div>
+          <div style="font-size:.78rem;color:var(--text2);margin-top:.25rem;"><i class="fa fa-map-marker-alt me-1" style="color:#C9A84C;"></i><span th:text="${fav.listing.location}"></span></div>
+          <div style="font-size:.72rem;color:var(--text2);margin-top:.2rem;">Saved <span th:text="${#temporals.format(fav.savedAt,'dd MMM yyyy')}"></span></div>
           <a th:href="@{/listing/{id}(id=${fav.listing.id})}" class="btn btn-gold btn-sm w-100 mt-2">View Details</a>
         </div>
       </div>

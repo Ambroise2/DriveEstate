@@ -31,7 +31,7 @@
         <div style="padding:1rem;">
           <div style="font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" th:text="${l.title}"></div>
           <div class="price" th:text="${l.formattedPrice}"></div>
-          <div style="font-size:.78rem;color:#6B7280;margin-top:.25rem;"><i class="fa fa-eye me-1"></i><span th:text="${l.views}"></span> views · <i class="fa fa-comment ms-1 me-1"></i><span th:text="${l.totalInquiries}"></span> inquiries</div>
+          <div style="font-size:.78rem;color:var(--text2);margin-top:.25rem;"><i class="fa fa-eye me-1"></i><span th:text="${l.views}"></span> views · <i class="fa fa-comment ms-1 me-1"></i><span th:text="${l.totalInquiries}"></span> inquiries</div>
           <div class="d-flex gap-2 mt-2">
             <a th:href="@{/listing/{id}(id=${l.id})}" class="btn btn-sm btn-outline-secondary flex-fill">View</a>
             <a th:href="@{/listing/{id}/edit(id=${l.id})}" class="btn btn-sm btn-gold flex-fill">Edit</a>

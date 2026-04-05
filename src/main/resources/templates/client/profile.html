@@ -6,11 +6,11 @@
 <body><main>
 <div class="page-hdr"><div class="container-fluid px-4"><h1 style="font-size:1.85rem;">👤 My Profile</h1></div></div>
 <div class="container-fluid px-4 pb-5" style="max-width:700px;">
-  <div style="background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.08);">
+  <div style="background:var(--bg3);border-radius:16px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.08);">
     <div class="text-center mb-4">
       <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#E8C97A);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#0A1628;margin:0 auto 0.75rem;" sec:authentication="principal.initial"></div>
       <div style="font-weight:700;font-size:1.1rem;" sec:authentication="principal.name"></div>
-      <div style="font-size:.82rem;color:#6B7280;" sec:authentication="principal.email"></div>
+      <div style="font-size:.82rem;color:var(--text2);" sec:authentication="principal.email"></div>
     </div>
 
     <form method="POST" th:action="@{/profile}">
@@ -39,7 +39,7 @@
           <label>Bio</label>
           <textarea name="bio" class="form-control" rows="3" placeholder="Tell buyers about yourself…" sec:authentication="principal.bio"></textarea>
         </div>
-        <div class="col-12"><hr><h6 style="font-weight:700;color:#9CA3AF;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;">Change Password (optional)</h6></div>
+        <div class="col-12"><hr><h6 style="font-weight:700;color:var(--text2);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;">Change Password (optional)</h6></div>
         <div class="col-md-6">
           <label>New Password</label>
           <input type="password" name="newPassword" class="form-control" placeholder="Leave blank to keep current" minlength="8">
