@@ -36,7 +36,10 @@ h1,h2,h3,.brand{font-family:'Cormorant Garamond',serif;}
 .topstrip a{color:var(--gold);text-decoration:none;}
 
 /* ── Navbar ── */
-.navbar-main{background:var(--nav-bg);border-bottom:2px solid rgba(201,168,76,.2);padding:.65rem 0;position:sticky;top:0;z-index:1000;backdrop-filter:blur(20px);box-shadow:var(--shadow);}
+.navbar-main{background:var(--nav-bg);border-bottom:2px solid rgba(201,168,76,.2);padding:.65rem 0;position:sticky;top:0;z-index:999;backdrop-filter:blur(20px);box-shadow:var(--shadow);}
+.navbar-main .collapse.show,.navbar-main .collapsing{background:var(--nav-bg);padding:.5rem 0;border-top:1px solid var(--border);}
+.navbar-main .navbar-toggler{border:1px solid var(--border);padding:.3rem .6rem;color:var(--text2);}
+.navbar-main .navbar-toggler-icon{filter:invert(1) opacity(.6);}
 .brand{font-size:1.7rem;font-weight:700;letter-spacing:-.5px;text-decoration:none;}
 [data-theme="dark"] .brand{color:var(--gold);}
 [data-theme="light"] .brand{color:var(--navy);}
@@ -114,6 +117,14 @@ a{color:inherit;}
 .social-icon:hover{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.3);color:var(--gold)!important;}
 
 @media(max-width:768px){.topstrip{display:none!important;}}
+
+/* ── Prevent navbar overlap ── */
+.navbar-main { position:sticky; top:0; z-index:1000; }
+body { padding-top: 0 !important; }
+.topstrip + .navbar-main + * { margin-top: 0; }
+/* Dropdown fix */
+.search-drop { margin-top: 4px; }
+/* Page content sits below navbar z-index */
 </style>
 </head>
 <body data-theme="dark">
