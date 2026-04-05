@@ -1,49 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="adminLayout(title, content)">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Admin — DriveEstate</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#C9A84C;--navy:#0A1628;--navy-l:#1E3160;--sidebar-w:240px;}
-body{font-family:'Outfit',sans-serif;background:#F1F3F7;margin:0;display:flex;min-height:100vh;}
-.sidebar{width:var(--sidebar-w);background:var(--navy);color:#fff;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column;}
-.sidebar .brand{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--gold);padding:1.25rem 1.25rem .5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:.5rem;}
-.sidebar .brand small{display:block;font-family:'Outfit',sans-serif;font-size:.65rem;color:rgba(255,255,255,.4);font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
-.sidebar-section{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:.75rem 1.25rem .3rem;}
-.sidebar a.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 1.25rem;color:rgba(255,255,255,.65);font-size:.85rem;text-decoration:none;border-radius:0;transition:all .2s;border-left:3px solid transparent;}
-.sidebar a.nav-item:hover,.sidebar a.nav-item.active{color:#fff;background:rgba(201,168,76,.12);border-left-color:var(--gold);}
-.sidebar a.nav-item i{width:16px;text-align:center;font-size:.88rem;}
-.sidebar .badge-pill{background:var(--gold);color:var(--navy);font-size:.65rem;padding:.2rem .45rem;border-radius:10px;font-weight:700;margin-left:auto;}
+:root{
+  --gold:#C9A84C; --gold-l:#E8C97A; --gold-dim:rgba(201,168,76,.12);
+  --navy:#0A1628; --navy2:#111E35; --navy3:#192847; --navy4:#1d3461;
+  --sidebar-w:240px;
+  --text:#E2E8F0; --text2:#94A3B8; --text3:#64748B;
+  --border:rgba(255,255,255,.07);
+  --card:#131F38;
+  --success:#10B981; --danger:#EF4444; --warning:#F59E0B; --info:#3B82F6;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--text);display:flex;min-height:100vh;}
+
+/* ── Sidebar ── */
+.sidebar{width:var(--sidebar-w);background:var(--navy2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column;}
+.sidebar::-webkit-scrollbar{width:3px;} .sidebar::-webkit-scrollbar-thumb{background:var(--gold-dim);}
+.sidebar-brand{padding:1.4rem 1.25rem 1rem;border-bottom:1px solid var(--border);}
+.sidebar-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#F0D98C,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sidebar-brand-sub{font-size:.6rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:2px;}
+.sidebar-badge{display:inline-block;margin-top:.5rem;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:.58rem;font-weight:700;letter-spacing:1px;padding:.18rem .55rem;border-radius:20px;text-transform:uppercase;}
+.sidebar-section{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text3);padding:1.1rem 1.25rem .35rem;opacity:.6;}
+.nav-item{display:flex;align-items:center;gap:.7rem;padding:.6rem 1.25rem;color:var(--text2);font-size:.82rem;font-weight:500;text-decoration:none;border-left:3px solid transparent;transition:all .2s;}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.04);border-left-color:rgba(201,168,76,.4);}
+.nav-item.active{color:var(--gold);background:var(--gold-dim);border-left-color:var(--gold);font-weight:600;}
+.nav-item i{width:16px;text-align:center;font-size:.82rem;}
+.nav-pill{margin-left:auto;background:var(--danger);color:#fff;font-size:.58rem;font-weight:800;padding:.15rem .4rem;border-radius:10px;}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding:.6rem 0;}
+
+/* ── Main ── */
 .main-content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;}
-.topbar{background:#fff;border-bottom:1px solid #E5E7EB;padding:.75rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-.topbar h6{margin:0;font-weight:700;font-size:1rem;}
+.topbar{background:var(--navy2);border-bottom:1px solid var(--border);padding:.85rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.topbar h6{margin:0;font-weight:700;font-size:1rem;color:var(--text);}
+.admin-badge{background:var(--gold-dim);border:1px solid rgba(201,168,76,.25);color:var(--gold);font-size:.72rem;font-weight:600;padding:.3rem .8rem;border-radius:20px;display:flex;align-items:center;gap:.4rem;}
+.admin-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--navy);border:none;font-weight:700;font-size:.78rem;border-radius:8px;padding:.4rem 1rem;text-decoration:none;transition:all .2s;}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(201,168,76,.3);color:var(--navy);}
+
+/* ── Page Body ── */
 .page-body{padding:1.75rem;flex:1;}
-.stat-card{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #F0F0F0;}
-.stat-card .value{font-size:2rem;font-weight:700;font-family:'Cormorant Garamond',serif;}
-.stat-card .label{font-size:.78rem;color:#6B7280;}
-.card-box{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.btn-gold{background:var(--gold);color:var(--navy);border:none;font-weight:600;border-radius:8px;}
-.btn-gold:hover{background:#E8C97A;color:var(--navy);}
-.table th{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9CA3AF;border-top:none;}
-.table td{font-size:.84rem;vertical-align:middle;}
-.badge-status-active{background:#ECFDF5;color:#065F46;}
-.badge-status-pending{background:#FFF7ED;color:#9A3412;}
-.badge-status-rejected{background:#FEF2F2;color:#991B1B;}
-.badge-status-sold{background:#F3F4F6;color:#374151;}
-.form-control:focus,.form-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
-.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:.75rem;}
+
+/* ── Stat Cards ── */
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;transition:all .2s;position:relative;overflow:hidden;}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(201,168,76,.2);}
+.stat-card .icon{font-size:2rem;margin-bottom:.75rem;display:block;}
+.stat-card .value{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--text);line-height:1;}
+.stat-card .label{font-size:.72rem;color:var(--text2);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-top:.25rem;}
+
+/* ── Card Box ── */
+.card-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+.card-box strong{color:var(--text);font-size:.88rem;}
+
+/* ── Table ── */
+.table{--bs-table-bg:transparent;color:var(--text);}
+.table th{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);border-bottom:1px solid var(--border)!important;padding-bottom:.75rem;}
+.table td{font-size:.82rem;vertical-align:middle;border-color:var(--border);color:var(--text);}
+.table-hover tbody tr:hover td{background:rgba(255,255,255,.03);}
+
+/* ── Badges ── */
+.badge-status-active{background:rgba(16,185,129,.12);color:#34D399;border:1px solid rgba(16,185,129,.2);font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:6px;}
+.badge-status-pending{background:rgba(245,158,11,.12);color:#FCD34D;border:1px solid rgba(245,158,11,.2);font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:6px;}
+.badge-status-rejected{background:rgba(239,68,68,.12);color:#FCA5A5;border:1px solid rgba(239,68,68,.2);font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:6px;}
+.badge-status-sold{background:rgba(139,92,246,.12);color:#C4B5FD;border:1px solid rgba(139,92,246,.2);font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:6px;}
+
+/* ── Forms ── */
+.form-control,.form-select{background:var(--navy3)!important;border:1px solid var(--border)!important;color:var(--text)!important;border-radius:8px;}
+.form-control:focus,.form-select:focus{border-color:rgba(201,168,76,.4)!important;box-shadow:0 0 0 3px rgba(201,168,76,.08)!important;}
+.form-control::placeholder{color:var(--text3)!important;}
+.form-select option{background:var(--navy2);}
+.form-label{color:var(--text2);font-size:.78rem;font-weight:600;}
+
+/* ── Alerts ── */
+.alert-success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:#34D399;border-radius:10px;}
+.alert-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#FCA5A5;border-radius:10px;}
+.btn-close{filter:invert(1) opacity(.4);}
+
+/* ── Misc ── */
+hr{border-color:var(--border);}
+a{color:inherit;}
+::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:var(--navy2);} ::-webkit-scrollbar-thumb{background:var(--navy4);border-radius:3px;}
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
 <aside class="sidebar">
-  <div class="brand">DriveEstate<small>Admin Control Panel</small></div>
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-name">DriveEstate</div>
+    <div class="sidebar-brand-sub">Control Panel</div>
+    <span class="sidebar-badge">⚡ Admin</span>
+  </div>
 
   <div class="sidebar-section">Overview</div>
   <a th:href="@{/admin/dashboard}" class="nav-item"><i class="fa fa-chart-line"></i>Dashboard</a>
@@ -52,7 +104,7 @@ body{font-family:'Outfit',sans-serif;background:#F1F3F7;margin:0;display:flex;mi
   <a th:href="@{/admin/users}"    class="nav-item"><i class="fa fa-users"></i>Users</a>
   <a th:href="@{/admin/listings}" class="nav-item"><i class="fa fa-list"></i>All Listings</a>
   <a th:href="@{/admin/listings(status=PENDING)}" class="nav-item">
-    <i class="fa fa-clock"></i>Pending Review <span class="badge-pill">!</span>
+    <i class="fa fa-clock"></i>Pending Review<span class="nav-pill">!</span>
   </a>
   <a th:href="@{/admin/inquiries}" class="nav-item"><i class="fa fa-envelope"></i>Inquiries</a>
 
@@ -64,18 +116,17 @@ body{font-family:'Outfit',sans-serif;background:#F1F3F7;margin:0;display:flex;mi
   <a th:href="@{/admin/settings}" class="nav-item"><i class="fa fa-cog"></i>Settings</a>
 
   <div class="sidebar-bottom">
-    <a th:href="@{/}"            class="nav-item" style="font-size:.8rem;"><i class="fa fa-arrow-left"></i>Back to Site</a>
-    <a th:href="@{/auth/logout}" class="nav-item" style="font-size:.8rem;color:rgba(255,100,100,.7);"><i class="fa fa-sign-out-alt"></i>Logout</a>
+    <a th:href="@{/}"            class="nav-item"><i class="fa fa-arrow-left"></i>Back to Site</a>
+    <a th:href="@{/auth/logout}" class="nav-item" style="color:rgba(239,68,68,.7)"><i class="fa fa-sign-out-alt"></i>Logout</a>
   </div>
 </aside>
 
-<!-- Main -->
 <div class="main-content">
   <div class="topbar">
     <h6>Admin Panel</h6>
     <div class="d-flex align-items-center gap-3">
-      <span style="font-size:.8rem;color:#6B7280;">Logged in as <strong>Admin</strong></span>
-      <a th:href="@{/}" class="btn btn-gold btn-sm">View Site</a>
+      <div class="admin-badge">Admin Online</div>
+      <a th:href="@{/}" class="btn-gold"><i class="fa fa-external-link-alt me-1"></i>View Site</a>
     </div>
   </div>
 
